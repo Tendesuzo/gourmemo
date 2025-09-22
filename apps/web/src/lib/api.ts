@@ -1,4 +1,5 @@
-export const API_BASE = import.meta.env.VITE_API_BASE || "http://localhost:3000";
+export const API_BASE =
+  import.meta.env.VITE_API_BASE || "http://localhost:3000";
 
 export type SearchParams = {
   mode: "private" | "public";
@@ -46,4 +47,11 @@ export async function createVisit(input: {
   });
   if (!res.ok) throw new Error("Failed to create visit");
   return res.json();
+}
+
+export async function deletePlace(id: number) {
+  const res = await fetch(`${API_BASE}/api/v1/places/${id}`, {
+    method: "DELETE",
+  });
+  if (!res.ok) throw new Error("Failed to delete place");
 }

@@ -1,6 +1,6 @@
 import AddPlaceForm from "./components/AddPlaceForm";
 import MapView from "./components/MapView";
-import { search } from "./lib/api";
+import { deletePlace, search } from "./lib/api";
 import { useState, useEffect } from "react";
 
 type Status = "visited" | "planned" | "all";
@@ -115,12 +115,28 @@ function App() {
         {/* 検索結果リスト */}
         <div className="space-y-2 max-h-[60vh] overflow-y-auto">
           {places.map((p) => (
-            <div key={p.id} className="border rounded p-2 bg-white shadow-sm">
-              <div className="font-bold">{p.name}</div>
-              <div className="text-sm text-gray-500">{p.category}</div>
-              {p.avg_rating && (
-                <div className="text-yellow-600">★ {p.avg_rating}</div>
-              )}
+            <div
+              key={p.id}
+              className="border rounded p-2 bg-white shadow-sm text-brandLight"
+            >
+              <div>
+                <div className="font-bold">{p.name}</div>
+                <div className="text-sm text-gray-500">{p.category}</div>
+                {p.avg_rating && (
+                  <div className="text-yellow-600">★ {p.avg_rating}</div>
+                )}
+              </div>
+              <button
+                onClick={async () => {
+                  if (confirm(`「${p.name}」を削除しますか？`)) {
+                    await deletePlace(p.id);
+                    await reload(); // 再検索してリスト更新
+                  }
+                }}
+                className="text-blue-500 hover:text-blue-600 ml-2 bg-text"
+              >
+                削除
+              </button>
             </div>
           ))}
         </div>

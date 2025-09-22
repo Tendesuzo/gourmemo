@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_13_132015) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_22_091703) do
   create_schema "tiger"
   create_schema "tiger_data"
   create_schema "topology"
@@ -551,6 +551,27 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_13_132015) do
     t.check_constraint "st_srid(the_geom) = 4269", name: "enforce_srid_geom"
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
+  create_table "visits", force: :cascade do |t|
+    t.bigint "place_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "visited_at"
+    t.integer "rating"
+    t.integer "price"
+    t.text "memo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["place_id"], name: "index_visits_on_place_id"
+    t.index ["user_id"], name: "index_visits_on_user_id"
+  end
+
   create_table "zcta5", primary_key: ["zcta5ce", "statefp"], force: :cascade do |t|
     t.serial "gid", null: false
     t.string "statefp", limit: 2, null: false
@@ -615,4 +636,6 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_13_132015) do
     t.string "statefp", limit: 2
     t.string "place", limit: 100, null: false
   end
+
+  add_foreign_key "visits", "places"
 end

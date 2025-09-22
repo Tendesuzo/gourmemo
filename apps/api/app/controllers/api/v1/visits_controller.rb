@@ -12,7 +12,7 @@ module Api
           price: visit_params[:price],
           memo: visit_params[:memo]
         )
-        render json: { id: visit.id }, status: :created
+        render json: {id: visit.id}, status: :created
       end
 
       private

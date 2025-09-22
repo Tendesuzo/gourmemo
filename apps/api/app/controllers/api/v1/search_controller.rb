@@ -2,8 +2,8 @@ module Api
   module V1
     class SearchController < ApplicationController
       def index
-        mode = params[:mode] == "public" ? :public : :private
-        w,s,e,n = params[:bbox].to_s.split(",").map(&:to_f) if params[:bbox]
+        mode = (params[:mode] == "public") ? :public : :private
+        w, s, e, n = params[:bbox].to_s.split(",").map(&:to_f) if params[:bbox]
         min_rating = params[:min_rating]&.to_f
 
         if mode == :private
@@ -11,7 +11,7 @@ module Api
           if w && s && e && n
             places = places.where(
               "ST_Intersects(lonlat::geometry, ST_MakeEnvelope(?, ?, ?, ?, 4326))",
-              w,s,e,n
+              w, s, e, n
             )
           end
           if min_rating
@@ -31,7 +31,7 @@ module Api
           if w && s && e && n
             public_places = public_places.where(
               "ST_Intersects(lonlat::geometry, ST_MakeEnvelope(?, ?, ?, ?, 4326))",
-              w,s,e,n
+              w, s, e, n
             )
           end
           if min_rating

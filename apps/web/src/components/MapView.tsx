@@ -34,27 +34,30 @@ export default function MapView({ places }: { places: Place[] }) {
     markersRef.current.forEach((m) => m.remove());
     markersRef.current = [];
 
-      // ピンを立てる
+    // ピンを立てる
     places.forEach((p) => {
       const marker = new Marker({ color: "red" })
         .setLngLat([p.lon, p.lat])
-        .setPopup(new maplibregl.Popup().setText(`${p.name} (${p.category})`))
+        .setPopup(
+          new maplibregl.Popup().setHTML(`
+    <div style="font-weight:bold; color:black;">${p.name}</div>
+    <div style="color:gray;">${p.category}</div>
+  `)
+        )
         .addTo(map);
       markersRef.current.push(marker);
     });
   }, [places]);
 
-//   return <div ref={ref} className="w-full h-[70vh] rounded-2xl shadow" />;
-    return (
+  //   return <div ref={ref} className="w-full h-[70vh] rounded-2xl shadow" />;
+  return (
     <div
-        ref={ref}
-        className="w-full h-screen"
-        style={{ minHeight: "800px" }} // 高さ確保
+      ref={ref}
+      className="w-full h-screen"
+      style={{ minHeight: "800px" }} // 高さ確保
     />
-    );
-
+  );
 }
-
 
 // import { useEffect, useRef } from "react";
 // import maplibregl, { Map, Marker } from "maplibre-gl";
