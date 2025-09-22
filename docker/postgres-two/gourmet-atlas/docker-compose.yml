@@ -1,0 +1,17 @@
+services:
+  pg_private:
+    image: postgis/postgis:16-3.4
+    platform: linux/amd64
+    environment:
+      POSTGRES_PASSWORD: privatepw
+      POSTGRES_DB: gourmet_private_dev
+    ports: ["5435:5432"]
+
+  pg_public:
+    image: postgis/postgis:16-3.4
+    platform: linux/amd64
+    environment:
+      POSTGRES_PASSWORD: publicpw
+      POSTGRES_DB: gourmet_public_dev
+    ports: ["5436:5432"]
+

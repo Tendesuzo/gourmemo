@@ -1,0 +1,12 @@
+default: &default
+  adapter: postgis     # ← postgresql ではなく postgis！
+  encoding: unicode
+  pool: 10
+
+development:
+  <<: *default
+  database: gourmet_private_dev
+  username: postgres
+  password: privatepw
+  host: localhost
+  port: 5435

@@ -1,0 +1,21 @@
+# Node/Frontend
+node_modules
+dist
+build
+*.log
+
+# Env / Secrets
+.env
+.env.*
+apps/**/config/master.key
+
+# macOS / Editor
+.DS_Store
+.vscode
+
+# Rails (もし含まれていれば)
+vendor/bundle
+tmp
+log
+storage
+.bundle
